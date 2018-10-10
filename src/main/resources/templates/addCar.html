@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<object th:include="fragments/fragment :: title" th:remove="tag"></object>
+		<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+		<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	</head>
+	
+	<body>
+		<nav th:replace="fragments/fragment :: navbar"></nav>
+	
+	<h2>Hello!</h2>
+	
+	<h3>Tambah Mobil</h3>	
+	<form th:action="@{/car/add/} + ${dealer.id}" th:object="${dealer}" method="POST">
+		<table>
+				<thead>
+				<tr>
+					<th>Brand</th>
+					<th>Type</th>
+					<th>Price</th>
+					<th>Amount</th>
+					<th><button type="submit" name="tambahbaris">Tambah Baris</button></th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr th:each="car, rowStat : *{listCar}">
+					<input type="hidden" th:field="*{id}"/> 
+					<td><input type="text" th:field="*{listCar[__${rowStat.index}__].brand}" /></td>
+					<td><input type="text" th:field="*{listCar[__${rowStat.index}__].type}" /></td>
+					<td><input type="number" th:field="*{listCar[__${rowStat.index}__].price}" /></td>
+					<td><input type="number" th:field="*{listCar[__${rowStat.index}__].amount}" /></td>
+      				<td><button type="submit" name="hapusbaris" th:value="${rowStat.index}">Hapus Baris</button></td>
+      				
+					<!-- <input type="hidden" th:field="*{dealer}"/>
+					<td> 
+					<input type="text" name="brand" /></td> <br>
+					<td>
+					<input type="text" name="type" /> </td><br>
+					<td> 
+					<input type="number" name="price" /> </td><br>
+					<td>
+					<input type="number" name="amount" /> </td><br><br>
+					-->
+					
+				</tbody>
+			</table>
+			<br>
+			<button type="submit" name="simpan">Simpan</button>
+	</form>	
+</body>
+
+</html>
